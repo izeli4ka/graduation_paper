@@ -17,28 +17,42 @@
         </router-link>
 
         <section class="features">
-          <h2 class="section-title">Почему стоит выбрать нас?</h2>
+          <!-- <h2 class="section-title">Почему стоит выбрать нас?</h2> -->
           <div class="features-grid">
             <div class="feature-card">
               <div class="feature-icon">🤖</div>
-              <h3>ИИ-помощник</h3>
-              <p class="feature-text">Автоматический анализ вашей документации и создание постера</p>
+              <div class="feature-content">
+                <h3>ИИ-помощник</h3>
+                <p class="feature-text">Автоматический анализ вашей документации и создание постера</p>
+              </div>
             </div>
             <div class="feature-card">
               <div class="feature-icon">⚡</div>
-              <h3>Быстро и просто</h3>
-              <p class="feature-text">Создание профессионального постера за считанные минуты</p>
+              <div class="feature-content">
+                <h3>Быстро и просто</h3>
+                <p class="feature-text">Создание профессионального постера за считанные минуты</p>
+              </div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">⚡</div>
+              <div class="feature-content">
+                <h3>Быстро и просто</h3>
+                <p class="feature-text">Создание профессионального постера за считанные минуты</p>
+              </div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🤖</div>
+              <div class="feature-content">
+                <h3>ИИ-помощник</h3>
+                <p class="feature-text">Автоматический анализ вашей документации и создание постера</p>
+              </div>
             </div>
           </div>
         </section>
       </div>
       <div class="right-section">
         <div class="poster-preview">
-          <img
-            src="../assets/banner.png"
-            alt="Poster Preview"
-            class="preview-image"
-          />
+          <img src="../assets/banner.png" alt="Poster Preview" class="preview-image" />
         </div>
       </div>
     </main>
@@ -50,7 +64,7 @@
 <style scoped>
 .app {
   min-height: 100vh;
-  background-color: #ffffff;
+  background-color: #f9faff;
   font-family: "Inter", sans-serif;
 }
 
@@ -229,41 +243,43 @@
 .features {
   /* padding: 6rem 4rem; */
   background: white;
-  margin-top: 100px;
+  margin-top: 70px;
 }
 
 .section-title {
   /* text-align: center; */
   font-size: 1.25rem;
-  color: black;
-  margin-bottom: 1rem;
+  color: #000c76;
+  margin-bottom: 1.5rem;
 }
 
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
-  max-width: 1200px;
   margin: 0 auto;
+  background-color: #f9faff;
 }
 
 .feature-card {
   background: white;
-  padding: 2rem;
-  border-radius: 16px;
-  text-align: center;
+  padding: 1.5rem 1rem;
+  border-radius: 10px;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
 }
 
 .feature-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 24px #000c7647;
 }
 
 .feature-icon {
+  margin: 1rem;
   font-size: 2.5rem;
-  margin-bottom: 1rem;
+  margin-right: 2rem;
 }
 
 .feature-text {
