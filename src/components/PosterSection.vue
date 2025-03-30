@@ -59,13 +59,13 @@ const posterData = computed(() => store.posterData);
 
 .header {
   height: 1080px;
-  background-color: #32006f;
+  background-color: #000c76;
   padding: 0px 200px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: flex-start;
-  gap: 50px;
+  /* gap: 50px; */
 }
 
 .title {
@@ -77,9 +77,8 @@ const posterData = computed(() => store.posterData);
 .rectangle {
   width: 1200px;
   height: 54px;
-  background-color: #740480;
+  background-color: #5860A6;
   clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
-  margin-bottom: 60px;
 }
 
 .subtitle {
@@ -120,7 +119,7 @@ const posterData = computed(() => store.posterData);
 .special-text {
   font-size: 96px;
   line-height: 1.4;
-  color: #32006f;
+  color: #000c76;
   margin-bottom: 60px;
 }
 
@@ -130,7 +129,7 @@ const posterData = computed(() => store.posterData);
   justify-content: center;
   align-items: center;
   padding: 0 200px;
-  background-color: #32006f;
+  background-color: #000c76;
 }
 
 .footer-text {

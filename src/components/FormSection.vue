@@ -2,56 +2,34 @@
 <template>
   <section class="form-section">
     <div class="navigation-buttons">
-      <button class="back-btn">
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M19 12H5M5 12L12 19M5 12L12 5"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+      <router-link to="/templates" class="back-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="white" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
         </svg>
         Назад
-      </button>
-      <button class="ai-helper-btn">
+      </router-link>
+      <button class="ai-helper-btn" @click="showModal = true">
         AI Helper
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12 2L2 7L12 12L22 7L12 2Z"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M2 17L12 22L22 17"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M2 12L12 17L22 12"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <img src="../assets/AI_white.svg" alt="image">
       </button>
+    </div>
+    <div v-if="showModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>AI Helper</h3>
+          <img src="../assets/AI_gradient.svg" alt="image">
+        </div>
+        <button class="close-btn" @click="showModal = false">×</button>
+        <div class="modal-body">
+          <p>Загрузите файл в формате .docx, и наш помощник автоматически обработает содержимое, чтобы помочь вам
+            заполнить поля для создания постера</p>
+          <button class="upload-btn" @click="triggerFileUpload">
+            Загрузить файл
+          </button>
+          <input type="file" ref="fileInput" accept=".docx" @change="handleFileUpload" style="display: none">
+        </div>
+      </div>
     </div>
     <div class="form-div">
       <!-- Poster Header Form -->
@@ -59,97 +37,52 @@
       <div class="form-container">
         <div class="form-group">
           <label for="project-title">Заголовок проекта</label>
-          <textarea
-            type="text"
-            id="project-title"
-            class="form-control"
-            placeholder="Тема проекта"
-            v-model="title"
+          <textarea type="text" id="project-title" class="form-control" placeholder="Тема проекта" v-model="title"
             @input="
               (e) => {
                 autoResize(e);
                 updateTitle();
               }
-            "
-          ></textarea>
+            "></textarea>
         </div>
 
         <div class="form-group">
           <label for="project-info">Титульная информация</label>
-          <textarea
-            type="text"
-            id="project-info"
-            class="form-control"
-            placeholder="Направление: «»"
-            v-model="subtitle"
+          <textarea type="text" id="project-info" class="form-control" placeholder="Направление: «»" v-model="subtitle"
             @input="
               (e) => {
                 autoResize(e);
                 updateSubtitle();
               }
-            "
-          ></textarea>
+            "></textarea>
         </div>
       </div>
 
       <!-- Poster Main Content Form -->
       <h3 class="form-title">Основная часть постера</h3>
       <div class="form-container">
-        <div
-          v-for="(element, index) in elements"
-          :key="element.id"
-          class="form-group"
-        >
+        <div v-for="(element, index) in elements" :key="element.id" class="form-group">
           <label :for="element.id">
             {{ getElementLabel(element.type) }}
           </label>
-          <textarea
-            v-if="['text', 'highlightedText'].includes(element.type)"
-            :id="element.id"
-            class="form-control form-textarea"
-            :placeholder="getElementPlaceholder(element.type)"
-            v-model="element.text"
+          <textarea v-if="['text', 'highlightedText'].includes(element.type)" :id="element.id"
+            class="form-control form-textarea" :placeholder="getElementPlaceholder(element.type)" v-model="element.text"
             @input="
               (e) => {
                 autoResize(e);
                 updateContent();
               }
-            "
-          ></textarea>
-          <input
-            v-else
-            type="text"
-            :id="element.id"
-            class="form-control"
-            :placeholder="getElementPlaceholder(element.type)"
-            v-model="element.text"
-            @input="updateContent"
-          />
+            "></textarea>
+          <input v-else type="text" :id="element.id" class="form-control"
+            :placeholder="getElementPlaceholder(element.type)" v-model="element.text" @input="updateContent" />
 
           <div v-if="element.type === 'image'" class="image-upload-container">
-            <input
-              type="file"
-              :id="'file-' + element.id"
-              class="file-input"
-              accept="image/*"
-              @change="(e) => handleImageUpload(e, element)"
-              hidden
-            />
+            <input type="file" :id="'file-' + element.id" class="file-input" accept="image/*"
+              @change="(e) => handleImageUpload(e, element)" hidden />
             <button class="add-file-btn" @click="triggerFileInput(element.id)">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 5V19M5 12H19"
-                  stroke="black"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5V19M5 12H19" stroke="black" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
               </svg>
               {{ element.imageUrl ? "Изменить файл" : "Добавить файл" }}
             </button>
@@ -164,74 +97,30 @@
         </div>
         <div class="action-buttons">
           <button class="action-btn" @click="addElement('header')">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 5V19M5 12H19"
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
             </svg>
             Заголовок
           </button>
           <button class="action-btn" @click="addElement('highlightedText')">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 5V19M5 12H19"
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
             </svg>
             Выделенный текст
           </button>
           <button class="action-btn" @click="addElement('text')">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 5V19M5 12H19"
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
             </svg>
             Текст
           </button>
           <button class="action-btn" @click="addElement('image')">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 5V19M5 12H19"
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
             </svg>
             Рисунок
           </button>
@@ -242,19 +131,13 @@
       <div class="form-container">
         <div class="form-group">
           <label for="footer-title">Заголовок подвала</label>
-          <input
-            type="text"
-            id="footer-title"
-            class="form-control"
-            placeholder="Учебное заведение"
-            v-model="footer"
+          <input type="text" id="footer-title" class="form-control" placeholder="Учебное заведение" v-model="footer"
             @input="
               (e) => {
                 autoResize(e);
                 updateFooter();
               }
-            "
-          />
+            " />
         </div>
       </div>
       <div class="btn-container">
@@ -416,6 +299,22 @@ const removeImage = (element) => {
   element.imageName = null
   updateContent()
 }
+
+const showModal = ref(false);
+const fileInput = ref(null);
+
+const triggerFileUpload = () => {
+  fileInput.value.click();
+};
+
+const handleFileUpload = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    // Здесь будет логика обработки файла
+    console.log('File uploaded:', file.name);
+    showModal.value = false;
+  }
+};
 </script>
 
 
@@ -476,11 +375,13 @@ const removeImage = (element) => {
 
 .back-btn,
 .ai-helper-btn {
-  padding: 10px 15px;
+  padding: 7px 15px;
   margin-right: 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  text-decoration: none;
+  font-size: 16px;
 }
 
 .back-btn {
@@ -499,6 +400,7 @@ const removeImage = (element) => {
   color: white;
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
 .ai-helper-btn svg {
@@ -524,6 +426,7 @@ const removeImage = (element) => {
 .form-group {
   background-color: #ffffff;
   padding: 8px;
+  border-radius: 3px;
   border: 1px solid #dde1e6;
 }
 
@@ -571,6 +474,7 @@ const removeImage = (element) => {
   margin-right: 10px;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .action-btn svg {
@@ -586,6 +490,7 @@ const removeImage = (element) => {
   color: white;
   display: flex;
   align-items: center;
+  font-size: 16px;
 }
 
 .btn-container {
@@ -610,9 +515,12 @@ const removeImage = (element) => {
 }
 
 .form-textarea {
-  min-height: 50px; /* Минимальная высота */
-  resize: vertical; /* Разрешаем изменение размера только по вертикали */
-  line-height: 1.5; /* Улучшаем читаемость */
+  min-height: 50px;
+  /* Минимальная высота */
+  resize: vertical;
+  /* Разрешаем изменение размера только по вертикали */
+  line-height: 1.5;
+  /* Улучшаем читаемость */
   overflow: hidden;
 }
 
@@ -663,5 +571,83 @@ const removeImage = (element) => {
 
 .file-input {
   display: none;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 450px;
+  padding: 20px;
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  align-items: center;
+  gap: 5px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: var(--blue-color);
+  font-size: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.close-btn:hover {
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+.modal-body {
+  text-align: center;
+}
+
+.modal-body p {
+  margin-bottom: 20px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.upload-btn {
+  background-color: var(--blue-color);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+  font-size: 16px;
+}
+
+.upload-btn:hover {
+  background-color: #000a61;
 }
 </style>

@@ -30,9 +30,9 @@ import PosterSection from "../components/PosterSection.vue";
 body {
   background-color: #f9faff;
   margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
+  padding: 0;
+  height: 100%;
+  /* overflow: hidden; */
 }
 
 .main-content {

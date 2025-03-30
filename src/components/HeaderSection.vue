@@ -10,7 +10,7 @@
       <router-link to="/" class="nav-link">Главная</router-link>
       <router-link to="/about" class="nav-link">О сервисе</router-link>
       <router-link to="/templates" class="nav-link">Шаблоны</router-link>
-      <router-link to="/create" class="nav-link">Создать</router-link>
+      <!-- <router-link to="/create" class="nav-link">Создать</router-link> -->
     </nav>
     <div class="auth-buttons">
       <button class="login-btn">Log In</button>

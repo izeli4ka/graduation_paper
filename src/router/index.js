@@ -21,12 +21,21 @@ const routes = [
     path: '/templates',
     name: 'Templates',
     component: () => import('../views/TemplatesPage.vue')
+  },
+  {
+    path: '/create/:template?',
+    name: 'CreatePoster',
+    component: () => import('../views/CreatePosterPage.vue'),
+    props: true
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior() {
+    return { top: 0, left: 0 }
+  }
 })
 
 export default router

@@ -12,7 +12,7 @@
           <p>и тратить время на сложные программы?</p>
           <p>Просто вставьте текст — и получите готовый постер!</p>
         </div>
-        <router-link to="/create" class="create-button">
+        <router-link to="/templates" class="create-button">
           Создать постер!
         </router-link>
 

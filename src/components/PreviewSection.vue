@@ -75,7 +75,7 @@ const generatePosterPreview = async () => {
   color: white;
   padding: 10px 20px;
   position: relative;
-  max-height: 95vh;
+  max-height: 92vh;
 }
 
 .preview-header {
