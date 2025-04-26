@@ -184,10 +184,6 @@ body {
         margin-bottom: 30px;
     }
 
-    .template-image {
-        height: 200px;
-    }
-
     .template-info {
         padding: 15px;
     }

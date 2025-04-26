@@ -20,7 +20,7 @@
           <h3>AI Helper</h3>
           <img src="../assets/AI_gradient.svg" alt="image">
         </div>
-        <button class="close-btn" @click="showModal = false">×</button>
+        <button class="close-btn" @click="showModal = false"><img src="../assets/close.svg" alt="close"></button>
         <div class="modal-body">
           <p>Загрузите файл в формате .docx, и наш помощник автоматически обработает содержимое, чтобы помочь вам
             заполнить поля для создания постера</p>
@@ -79,21 +79,21 @@
           <div v-if="element.type === 'image'" class="image-upload-container">
             <input type="file" :id="'file-' + element.id" class="file-input" accept="image/*"
               @change="(e) => handleImageUpload(e, element)" hidden />
-            <button class="add-file-btn" @click="triggerFileInput(element.id)">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 5V19M5 12H19" stroke="black" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-              {{ element.imageUrl ? "Изменить файл" : "Добавить файл" }}
-            </button>
+            <div class="add-file-container">
+              <button class="add-file-btn" @click="triggerFileInput(element.id)">
+                {{ element.imageUrl ? "Изменить файл" : "Загрузить с устройства" }}
+              </button>
+              <button class="add-file-btn">Выбрать из галереи</button>
+            </div>
             <div v-if="element.imageUrl" class="image-preview">
               <img :src="element.imageUrl" alt="Preview" />
               <button class="remove-image-btn" @click="removeImage(element)">
-                ×
+                <img class="img-close" src="../assets/close_red.svg" alt="close">
               </button>
             </div>
           </div>
-          <button class="delete-btn" @click="deleteElement(index)">×</button>
+          <button class="delete-btn" @click="deleteElement(index)"><img class="img-close" src="../assets/close.svg"
+              alt="close"></button>
         </div>
         <div class="action-buttons">
           <button class="action-btn" @click="addElement('header')">
@@ -338,7 +338,7 @@ const handleFileUpload = (event) => {
 .delete-btn {
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 2px;
   background: none;
   border: none;
   cursor: pointer;
@@ -353,6 +353,10 @@ const handleFileUpload = (event) => {
 .delete-btn:hover {
   background-color: rgba(255, 0, 0, 0.1);
   border-radius: 50%;
+}
+
+.img-close {
+  padding: 4px;
 }
 
 .form-section {
@@ -382,6 +386,32 @@ const handleFileUpload = (event) => {
   cursor: pointer;
   text-decoration: none;
   font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.ai-helper-btn:hover {
+  /* background-color: #001299; */
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.ai-helper-btn:active {
+  background-color: #000951;
+  transform: translateY(0px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.back-btn:hover {
+  /* background-color: #001299; */
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.back-btn:active {
+  background-color: #000951;
+  transform: translateY(0px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
 .back-btn {
@@ -442,6 +472,12 @@ const handleFileUpload = (event) => {
   padding: 10px;
   border: 1px solid #dde1e6;
   background-color: #dde1e6;
+  resize: none;
+}
+
+.add-file-container {
+  display: flex;
+  gap: 10px;
 }
 
 .add-file-btn {
@@ -461,6 +497,8 @@ const handleFileUpload = (event) => {
 
 .action-buttons {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .action-btn {
@@ -471,10 +509,15 @@ const handleFileUpload = (event) => {
   color: white;
   border: none;
   padding: 10px 15px;
-  margin-right: 10px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .action-btn svg {
@@ -491,6 +534,12 @@ const handleFileUpload = (event) => {
   display: flex;
   align-items: center;
   font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.save-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .btn-container {
@@ -516,16 +565,9 @@ const handleFileUpload = (event) => {
 
 .form-textarea {
   min-height: 50px;
-  /* Минимальная высота */
-  resize: vertical;
-  /* Разрешаем изменение размера только по вертикали */
   line-height: 1.5;
-  /* Улучшаем читаемость */
   overflow: hidden;
-}
-
-.form-textarea::-webkit-scrollbar {
-  display: none;
+  resize: none;
 }
 
 @media print {
@@ -555,14 +597,13 @@ const handleFileUpload = (event) => {
 
 .remove-image-btn {
   position: absolute;
-  top: -10px;
-  right: -10px;
-  background: red;
+  top: -7px;
+  right: -7px;
   color: white;
-  border: none;
+  border: 1px solid #C90000;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -631,7 +672,7 @@ const handleFileUpload = (event) => {
 
 .modal-body p {
   margin-bottom: 20px;
-  color: #666;
+  color: #000000;
   line-height: 1.5;
 }
 
