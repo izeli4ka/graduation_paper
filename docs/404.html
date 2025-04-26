@@ -1,1 +1,14 @@
-<!doctype html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vue App</title><script defer="defer" src="/graduation_paper/js/chunk-vendors.07d13d67.js"></script><script defer="defer" src="/graduation_paper/js/app.4733d3b4.js"></script><link href="/graduation_paper/css/app.a1cbfabc.css" rel="stylesheet"></head><body><div id="app"></div></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    // Сохраняем запрошенный URL
+    const segment = location.pathname.substring(1);
+    const url = '/' + segment;
+    
+    // Перенаправляем на главную страницу с URL в виде параметра запроса
+    localStorage.setItem('redirect', url);
+    location.href = location.origin + '/index.html';
+  </script>
+</head>
+</html>
