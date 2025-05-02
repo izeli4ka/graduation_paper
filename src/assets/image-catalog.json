@@ -1,0 +1,58 @@
+{
+  "imagesCatalog": {
+    "categories": [
+      {
+        "id": "Технологии",
+        "images": [
+          {
+            "id": "tech-1",
+            "url": "/catalog/react.png",
+            "tags": [
+              "React"
+            ]
+          },
+          {
+            "id": "tech-2",
+            "url": "/catalog/vue.webp",
+            "tags": [
+              "Vue"
+            ]
+          },
+          {
+            "id": "tech-3",
+            "url": "/catalog/python.webp",
+            "tags": [
+              "Python"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Искусственный интеллект",
+        "images": [
+          {
+            "id": "AI-1",
+            "url": "/catalog/AI.png",
+            "tags": [
+              "AI"
+            ]
+          },
+          {
+            "id": "AI-2",
+            "url": "/catalog/AI_robot.png",
+            "tags": [
+              "AI robot"
+            ]
+          },
+          {
+            "id": "AI-3",
+            "url": "/catalog/AI_brain.png",
+            "tags": [
+              "AI brain"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -20,7 +20,8 @@
           <h3>AI Helper</h3>
           <img src="../assets/AI_gradient.svg" alt="image">
         </div>
-        <button class="close-btn" @click="showModal = false"><img src="../assets/close.svg" alt="close"></button>
+        <button class="close-btn" @click="showModal = false"><img class="img-close" src="../assets/close.svg"
+            alt="close"></button>
         <div class="modal-body">
           <p>Загрузите файл в формате .docx, и наш помощник автоматически обработает содержимое, чтобы помочь вам
             заполнить поля для создания постера</p>
@@ -31,6 +32,35 @@
         </div>
       </div>
     </div>
+
+    <!-- Модальное окно галереи -->
+    <div v-if="showGalleryModal" class="gallery-modal">
+      <div class="gallery-content">
+        <div class="gallery-header">
+          <h3>Выберите изображение</h3>
+          <button class="modal-close-btn" @click="showGalleryModal = false">
+            <img class="img-close" src="../assets/close.svg" alt="close">
+          </button>
+        </div>
+
+        <div class="gallery-body">
+          <div v-for="category in imagesCatalog.imagesCatalog.categories" :key="category.id" class="gallery-category">
+            <h4>{{ category.id }}</h4>
+            <div class="gallery-grid">
+              <div v-for="image in category.images" :key="image.id" class="gallery-item"
+                @click="selectImageFromGallery(image)">
+                <img :src="image.url" :alt="image.id">
+                <div class="image-tags">
+                  <span v-for="tag in image.tags" :key="tag" class="tag">{{ tag }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <div class="form-div">
       <!-- Poster Header Form -->
       <h3 class="form-title">Шапка постера</h3>
@@ -83,7 +113,7 @@
               <button class="add-file-btn" @click="triggerFileInput(element.id)">
                 {{ element.imageUrl ? "Изменить файл" : "Загрузить с устройства" }}
               </button>
-              <button class="add-file-btn">Выбрать из галереи</button>
+              <button class="add-file-btn" @click="openGallery(element)">Выбрать из галереи</button>
             </div>
             <div v-if="element.imageUrl" class="image-preview">
               <img :src="element.imageUrl" alt="Preview" />
@@ -92,8 +122,16 @@
               </button>
             </div>
           </div>
-          <button class="delete-btn" @click="deleteElement(index)"><img class="img-close" src="../assets/close.svg"
-              alt="close"></button>
+          <div class="control-buttons">
+            <button class="move-btn up" @click="moveElement(index, 'up')" :disabled="index === 0">↑</button>
+
+            <button class="move-btn down" @click="moveElement(index, 'down')"
+              :disabled="index === elements.length - 1">↓</button>
+
+            <button class="delete-btn" @click="deleteElement(index)">
+              <img class="img-close" src="../assets/close.svg" alt="close">
+            </button>
+          </div>
         </div>
         <div class="action-buttons">
           <button class="action-btn" @click="addElement('header')">
@@ -147,6 +185,7 @@
       </div>
     </div>
   </section>
+
 </template>
 
 
@@ -154,11 +193,14 @@
 import { ref, watch } from "vue";
 import { store } from "./store";
 import html2pdf from "html2pdf.js";
+import imagesCatalog from '../assets/image-catalog.json';
 
 const title = ref("");
 const subtitle = ref("");
 const elements = ref([]);
 const footer = ref("");
+const showGalleryModal = ref(false);
+const currentElement = ref(null);
 
 const updateTitle = () => {
   store.updateTitle(title.value);
@@ -315,6 +357,32 @@ const handleFileUpload = (event) => {
     showModal.value = false;
   }
 };
+
+const moveElement = (index, direction) => {
+  if (direction === 'up' && index > 0) {
+    [elements.value[index], elements.value[index - 1]] =
+      [elements.value[index - 1], elements.value[index]];
+  } else if (direction === 'down' && index < elements.value.length - 1) {
+    [elements.value[index], elements.value[index + 1]] =
+      [elements.value[index + 1], elements.value[index]];
+  }
+  updateContent();
+};
+
+const openGallery = (element) => {
+  currentElement.value = element;
+  showGalleryModal.value = true;
+};
+
+const selectImageFromGallery = (image) => {
+  if (currentElement.value) {
+    currentElement.value.imageUrl = image.url;
+    currentElement.value.imageName = image.id;
+    updateContent();
+  }
+  showGalleryModal.value = false;
+};
+
 </script>
 
 
@@ -336,9 +404,6 @@ const handleFileUpload = (event) => {
 }
 
 .delete-btn {
-  position: absolute;
-  right: 10px;
-  top: 2px;
   background: none;
   border: none;
   cursor: pointer;
@@ -659,6 +724,8 @@ const handleFileUpload = (event) => {
   position: absolute;
   right: 20px;
   top: 20px;
+  display: flex;
+  padding: 5px;
 }
 
 .close-btn:hover {
@@ -690,5 +757,141 @@ const handleFileUpload = (event) => {
 
 .upload-btn:hover {
   background-color: #000a61;
+}
+
+.form-group {
+  position: relative;
+}
+
+.control-buttons {
+  position: absolute;
+  right: 10px;
+  top: 17px;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.move-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: var(--blue-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.move-btn:hover:not(:disabled) {
+  background-color: #001299;
+  transform: translateY(-2px);
+}
+
+.move-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.gallery-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.gallery-content {
+  background: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #dde1e6;
+}
+
+.gallery-body {
+  padding: 20px;
+}
+
+.gallery-category {
+  margin-bottom: 24px;
+}
+
+.gallery-category h4 {
+  margin-bottom: 16px;
+  color: var(--blue-color);
+  text-transform: capitalize;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.gallery-item {
+  border: 1px solid #dde1e6;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.image-tags {
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tag {
+  background: #f0f0f0;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: #666;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  padding: 5px;
+}
+
+.modal-close-btn:hover {
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 50%;
 }
 </style>
