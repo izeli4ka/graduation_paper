@@ -1,0 +1,126 @@
+{
+  "imagesCatalog": {
+    "categories": [
+      {
+        "id": "Технологии",
+        "images": [
+          {
+            "id": "tech-1",
+            "url": "/catalog/react.png",
+            "tags": [
+              "React"
+            ]
+          },
+          {
+            "id": "tech-2",
+            "url": "/catalog/vue.png",
+            "tags": [
+              "Vue"
+            ]
+          },
+          {
+            "id": "tech-3",
+            "url": "/catalog/python.png",
+            "tags": [
+              "Python"
+            ]
+          },
+          {
+            "id": "tech-4",
+            "url": "/catalog/java.png",
+            "tags": [
+              "java"
+            ]
+          },
+          {
+            "id": "tech-5",
+            "url": "/catalog/javascript.png",
+            "tags": [
+              "js"
+            ]
+          },
+          {
+            "id": "tech-6",
+            "url": "/catalog/mysql.png",
+            "tags": [
+              "mysgl"
+            ]
+          },
+          {
+            "id": "tech-7",
+            "url": "/catalog/postgresql.png",
+            "tags": [
+              "postgresql"
+            ]
+          },
+          {
+            "id": "tech-8",
+            "url": "/catalog/tensorflow.png",
+            "tags": [
+              "tensorflow"
+            ]
+          },
+          {
+            "id": "tech-9",
+            "url": "/catalog/unity.png",
+            "tags": [
+              "unity"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Искусственный интеллект",
+        "images": [
+          {
+            "id": "AI-1",
+            "url": "/catalog/AI.png",
+            "tags": [
+              "AI"
+            ]
+          },
+          {
+            "id": "AI-2",
+            "url": "/catalog/AI_robot.png",
+            "tags": [
+              "AI robot"
+            ]
+          },
+          {
+            "id": "AI-3",
+            "url": "/catalog/AI_brain.png",
+            "tags": [
+              "AI brain"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Мокапы",
+        "images": [
+          {
+            "id": "mockup-1",
+            "url": "/catalog/mockup.avif",
+            "tags": [
+              "mockup"
+            ]
+          },
+          {
+            "id": "mockup-2",
+            "url": "/catalog/mockup1.webp",
+            "tags": [
+              "mockup"
+            ]
+          },
+          {
+            "id": "mockup-3",
+            "url": "/catalog/mockup2.png",
+            "tags": [
+              "mockup"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
