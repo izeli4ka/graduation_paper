@@ -12,14 +12,14 @@
     
     <nav class="nav-menu" :class="{ 'active': menuOpen }">
       <router-link to="/" class="nav-link">Главная</router-link>
-      <router-link to="/about" class="nav-link">О сервисе</router-link>
+      <router-link to="/about" class="nav-link">О проекте</router-link>
       <router-link to="/templates" class="nav-link">Шаблоны</router-link>
       <!-- <router-link to="/create" class="nav-link">Создать</router-link> -->
     </nav>
     
     <div class="auth-buttons" :class="{ 'active': menuOpen }">
-      <button class="register-btn">Регистрация</button>
-      <button class="login-btn">Вход</button>
+      <router-link to="/register" class="register">Регистрация</router-link>
+      <router-link to="/login" class="login">Вход</router-link>
     </div>
   </header>
 </template>
@@ -102,23 +102,28 @@ export default {
   transition: all 0.3s;
 }
 
-.login-btn {
+.login {
   background-color: white;
   border: none;
   color: var(--blue-color);
+  text-decoration: none;
+  padding: 10px 15px;
+  border: 2px solid white;
 }
 
-.login-btn:hover {
+.login:hover {
   background-color: #f0f0f0;
 }
 
-.register-btn {
+.register {
   background-color: transparent;
   border: 2px solid white;
   color: white;
+  text-decoration: none;
+  padding: 10px 15px;
 }
 
-.register-btn:hover {
+.register:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -207,7 +212,6 @@ export default {
   
   .auth-buttons {
     position: fixed;
-    /* bottom: 50px; */
     right: -100%;
     width: 70%;
     display: flex;
@@ -216,6 +220,7 @@ export default {
     transition: all 0.5s ease;
     z-index: 10;
     top: 330px;
+    gap: 10px;
   }
   
   .auth-buttons.active {

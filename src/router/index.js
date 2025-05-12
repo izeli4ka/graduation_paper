@@ -27,6 +27,16 @@ const routes = [
     name: 'CreatePoster',
     component: () => import('../views/CreatePosterPage.vue'),
     props: true
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('../views/RegistrationPage.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/LoginPage.vue')
   }
 ]
 

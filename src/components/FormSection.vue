@@ -177,6 +177,17 @@
               }
             " />
         </div>
+        <div class="form-group">
+          <label for="footer-link">Ссылка для QR кода</label>
+          <input type="text" id="footer-link" class="form-control" placeholder="Вставьте сюда ссылку" v-model="footerLink"
+            @input="
+              (e) => {
+                autoResize(e);
+                validateUrl();
+                updateFooter();
+              }
+            " />
+        </div>
       </div>
       <div class="btn-container">
         <button class="save-btn" @click="downloadPDF">

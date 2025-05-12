@@ -97,7 +97,7 @@ const posterData = computed(() => store.posterData);
   column-gap: 300px;
   column-rule: 6px solid;
   column-rule-color: #000000;
-  height: 8050px;
+  height: 7450px;
   column-fill: auto;
 }
 
@@ -124,7 +124,7 @@ const posterData = computed(() => store.posterData);
 }
 
 .footer {
-  height: 300px;
+  height: 900px;
   display: flex;
   justify-content: center;
   align-items: center;
