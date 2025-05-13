@@ -80,7 +80,7 @@ const handleSubmit = async () => {
     
     try {
         const response = await axios.post(
-            'https://graduation-paper-backend-service.onrender.com/register',
+            'https://graduation-paper-backend-service.onrender.com/api/register',
             {
                 email: form.email,
                 password: form.password,
