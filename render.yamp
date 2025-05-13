@@ -1,7 +1,10 @@
-headers:
-  - path: "/*.js"
-    name: "Content-Type"
-    value: "application/javascript"
-  - path: "/*.css"
-    name: "Content-Type"
-    value: "text/css"
+services:
+  - type: web
+    name: graduation-paper-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
