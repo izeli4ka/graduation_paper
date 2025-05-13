@@ -25,6 +25,19 @@
                     Пароль должен содержать минимум 8 букв, цифр и знаков.
                 </small>
             </div>
+            <div class="input-field">
+                <label for="password">Пароль</label>
+                <div class="password-input-container">
+                    <input :type="showPassword ? 'text' : 'password'" id="password" v-model="form.confirm_password"
+                        placeholder="Пароль" class="form-control" />
+                    <span @click="togglePassword" class="password-toggle">
+                        <i :class="showPassword ? 'eye-closed' : 'eye-open'"></i>
+                    </span>
+                </div>
+                <small class="password-requirements">
+                    Пароль должен содержать минимум 8 букв, цифр и знаков.
+                </small>
+            </div>
             <button @click="handleSubmit" class="submit-button">Зарегистрироваться</button>
             <div class="login-link">
                 <router-link to="/login" class="login">Вы уже зарегистрированы? Вход</router-link>
@@ -35,20 +48,22 @@
 
 <script setup>
 import { reactive, ref } from 'vue';
+import axios from 'axios'
 
 const showPassword = ref(false);
 
 const form = reactive({
     firstName: '',
     email: '',
-    password: ''
+    password: '',
+    confirm_password: ''
 });
 
 const togglePassword = () => {
     showPassword.value = !showPassword.value;
 };
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
     if (!form.firstName) {
         alert('Пожалуйста введите свое имя');
@@ -62,9 +77,24 @@ const handleSubmit = () => {
         alert('Пароль должен содержать минимум 8 букв, цифр и знаков');
         return;
     }
-    // Submit form data
-    console.log('Form submitted:', form);
-    // Implement API call here
+    
+    try {
+        const response = await axios.post(
+            'https://graduation-paper-backend-service.onrender.com/register',
+            {
+                email: form.email,
+                password: form.password,
+                username: form.firstName,
+                confirm_password: form.confirm_password
+            }
+        );
+        alert('Успешная регистрация!');
+        console.log(response.data);
+        // здесь можно редиректить: this.$router.push('/login') — если используешь Vue Router
+    } catch (error) {
+        console.error(error.response?.data || error.message);
+        alert('Ошибка при регистрации: ' + (error.response?.data?.detail || 'Попробуйте позже.'));
+    }
 };
 </script>
 
