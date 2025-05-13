@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkvkr"]=self["webpackChunkvkr"]||[]).push([[103],{103:function(n,r,u){u.r(r),u.d(r,{default:function(){return k}});var e=u(6768);function t(n,r){return(0,e.uX)(),(0,e.CE)("div",null,"AboutPage")}var a=u(1241);const c={},f=(0,a.A)(c,[["render",t]]);var k=f}}]);
-//# sourceMappingURL=103.73fcaf67.js.map
